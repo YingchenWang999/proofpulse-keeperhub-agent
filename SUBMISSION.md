@@ -31,6 +31,7 @@ The default network is Sepolia. Mainnet is blocked unless explicitly enabled. Th
 
 ## Verified links and identifiers
 
+- Hackathon: <https://dorahacks.io/hackathon/agents-onchain>
 - Repository: <https://github.com/YingchenWang999/proofpulse-keeperhub-agent>
 - KeeperHub execution: `42y70sy5vrb2k8hhlafpz`
 - Explorer transaction: <https://sepolia.etherscan.io/tx/0x830da04e05873465cc20a59875ccd43c6dbba255831d1af8b6344a742e3ae71a>
