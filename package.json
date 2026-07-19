@@ -1,0 +1,18 @@
+{
+  "name": "keeperhub-proofpulse-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A zero-principal AI agent that records chain-health decisions through KeeperHub.",
+  "scripts": {
+    "start": "node src/index.js",
+    "demo": "DRY_RUN=true FORCE_RECORD=true node src/index.js",
+    "check": "npm run check:syntax && npm run check:contract && npm test",
+    "check:contract": "node scripts/check-contract.mjs",
+    "check:syntax": "find src test scripts -type f \\( -name '*.js' -o -name '*.mjs' \\) -print0 | xargs -0 -n1 node --check",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

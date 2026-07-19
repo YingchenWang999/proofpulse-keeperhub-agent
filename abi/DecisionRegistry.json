@@ -1,0 +1,15 @@
+[
+  {
+    "type": "function",
+    "name": "recordDecision",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "runId", "type": "bytes32" },
+      { "name": "status", "type": "uint8" },
+      { "name": "confidenceBps", "type": "uint16" },
+      { "name": "evidenceHash", "type": "bytes32" },
+      { "name": "summary", "type": "string" }
+    ],
+    "outputs": []
+  }
+]
