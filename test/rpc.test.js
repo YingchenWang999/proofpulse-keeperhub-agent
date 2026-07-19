@@ -88,3 +88,18 @@ test("passes a finite abort signal to every RPC request", async () => {
   assert.equal(seenSignals.length, 3);
   assert.ok(seenSignals.every((signal) => signal instanceof AbortSignal));
 });
+
+test("retries a transient RPC transport failure", async () => {
+  let blockAttempts = 0;
+  const stableFetch = makeRpcFetch();
+  const fetchImpl = async (url, options) => {
+    const { method } = JSON.parse(options.body);
+    if (method === "eth_getBlockByNumber" && blockAttempts++ === 0) {
+      throw new Error("temporary connection reset");
+    }
+    return stableFetch(url, options);
+  };
+  const snapshot = await collectChainSnapshot(config, { fetchImpl, nowMs: 1_010_000 });
+  assert.equal(snapshot.blockNumber, "100");
+  assert.equal(blockAttempts, 2);
+});

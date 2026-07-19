@@ -32,6 +32,13 @@ export function buildKeeperHubInvocation(config, decision, evidence) {
   };
 }
 
+export function buildKeeperHubStatusInvocation(config, executionId) {
+  return {
+    command: config.khBin,
+    args: ["execute", "status", executionId, "--json"],
+  };
+}
+
 export function runProcess(command, args, options = {}) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
@@ -133,7 +140,17 @@ export async function executeThroughKeeperHub(config, decision, evidence, runner
     cwd: config.rootDir,
     timeoutMs: config.khProcessTimeoutMs,
   });
-  const parsed = parseJsonOutput(result.stdout);
+  let parsed = parseJsonOutput(result.stdout);
+  const initialExecutionId = typeof parsed.executionId === "string" ? parsed.executionId.trim() : "";
+  const initialStatus = typeof parsed.status === "string" ? parsed.status.toLowerCase() : "";
+  if (initialExecutionId && initialStatus === "completed" && !findTransactionHash(parsed)) {
+    const statusInvocation = buildKeeperHubStatusInvocation(config, initialExecutionId);
+    const statusResult = await runner(statusInvocation.command, statusInvocation.args, {
+      cwd: config.rootDir,
+      timeoutMs: config.khProcessTimeoutMs,
+    });
+    parsed = parseJsonOutput(statusResult.stdout);
+  }
   const receipt = parseExecutionReceipt(parsed);
   return {
     mode: "live",

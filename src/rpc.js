@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 
 const WEI_PER_GWEI = 1_000_000_000n;
 const MAX_FUTURE_BLOCK_SKEW_SECONDS = 15n;
+const RPC_MAX_ATTEMPTS = 3;
 
 function hexToBigInt(value, field) {
   if (typeof value !== "string" || !/^0x[0-9a-f]+$/i.test(value)) {
@@ -11,21 +12,33 @@ function hexToBigInt(value, field) {
 }
 
 export async function rpcCall(rpcUrl, method, params, fetchImpl = fetch, timeoutMs = 10_000) {
-  let response;
-  try {
-    response = await fetchImpl(rpcUrl, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
-      signal: AbortSignal.timeout(timeoutMs),
-    });
-  } catch (error) {
-    throw new Error(`RPC ${method} request failed: ${error.message}`, { cause: error });
+  let lastError;
+  for (let attempt = 1; attempt <= RPC_MAX_ATTEMPTS; attempt += 1) {
+    try {
+      const response = await fetchImpl(rpcUrl, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }),
+        signal: AbortSignal.timeout(timeoutMs),
+      });
+      if (!response.ok) {
+        const error = new Error(`RPC ${method} failed with HTTP ${response.status}`);
+        if (![408, 429].includes(response.status) && response.status < 500) throw error;
+        lastError = error;
+      } else {
+        const body = await response.json();
+        if (body.error) throw new Error(`RPC ${method} failed: ${body.error.message}`);
+        return body.result;
+      }
+    } catch (error) {
+      if (error.message.startsWith(`RPC ${method} failed`)) throw error;
+      lastError = new Error(`RPC ${method} request failed: ${error.message}`, { cause: error });
+    }
+    if (attempt < RPC_MAX_ATTEMPTS) {
+      await new Promise((resolve) => setTimeout(resolve, attempt * 150));
+    }
   }
-  if (!response.ok) throw new Error(`RPC ${method} failed with HTTP ${response.status}`);
-  const body = await response.json();
-  if (body.error) throw new Error(`RPC ${method} failed: ${body.error.message}`);
-  return body.result;
+  throw lastError;
 }
 
 export async function collectChainSnapshot(config, options = {}) {
@@ -81,4 +94,4 @@ export async function collectChainSnapshot(config, options = {}) {
   };
 }
 
-export { MAX_FUTURE_BLOCK_SKEW_SECONDS };
+export { MAX_FUTURE_BLOCK_SKEW_SECONDS, RPC_MAX_ATTEMPTS };
