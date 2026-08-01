@@ -120,3 +120,7 @@ The local model can classify and explain conditions but cannot choose a destinat
 - Explicit guarantee: the execution path transfers no user principal and sends zero native value
 
 See [`SUBMISSION.md`](SUBMISSION.md) for ready-to-paste submission copy. Only the final video URL and the hackathon submission action remain external.
+
+## License
+
+Except for third-party components, including KeeperHub tooling, that retain their own licenses, the original code in this version and later versions of this project is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Commercial use requires separate written permission from the repository owner. Versions published before 2026-08-01 remain available under the license included with those versions.

@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: PolyForm-Noncommercial-1.0.0
 pragma solidity ^0.8.24;
 
 /// @notice Minimal, non-payable registry for agent decisions. It never holds or moves assets.
