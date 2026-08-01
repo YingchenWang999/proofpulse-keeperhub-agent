@@ -32,6 +32,7 @@ The default network is Sepolia. Mainnet is blocked unless explicitly enabled. Th
 ## Verified links and identifiers
 
 - Hackathon: <https://dorahacks.io/hackathon/agents-onchain>
+- DoraHacks BUIDL: <https://dorahacks.io/buidl/47244>
 - Repository: <https://github.com/YingchenWang999/proofpulse-keeperhub-agent>
 - KeeperHub execution: `42y70sy5vrb2k8hhlafpz`
 - Explorer transaction: <https://sepolia.etherscan.io/tx/0x830da04e05873465cc20a59875ccd43c6dbba255831d1af8b6344a742e3ae71a>
@@ -39,7 +40,7 @@ The default network is Sepolia. Mainnet is blocked unless explicitly enabled. Th
 - Deployment transaction: <https://sepolia.etherscan.io/tx/0x3bae091e94ae1e5d5166ca747797eeccb833acdedce6847b2f755539508223df>
 - Run ID: `0xdc00ff4b0bcba4822e7c20ad37c6617afc7322765122b3f1cbf17afbb72a4c05`
 - Evidence hash: `0x6537c212e24198dfc7297f72f3c3082c12f5d136d32ba87d17d7f238c882e8fd`
-- Demo video: add the uploaded URL after recording with `DEMO_SCRIPT.md`
+- Demo video: <https://youtu.be/XnZ4nJUDMVw>
 
 ## Verified result
 

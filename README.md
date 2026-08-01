@@ -112,14 +112,16 @@ The local model can classify and explain conditions but cannot choose a destinat
 
 ## Submission evidence
 
+- DoraHacks BUIDL: <https://dorahacks.io/buidl/47244>
 - Public source: <https://github.com/YingchenWang999/proofpulse-keeperhub-agent>
+- Public demo video: <https://youtu.be/XnZ4nJUDMVw>
 - Real KeeperHub execution and explorer transaction: linked above
 - Deployment and read-back evidence: [`DEPLOYMENT.md`](DEPLOYMENT.md)
 - Architecture and safety explanation: this README and [`SECURITY.md`](SECURITY.md)
 - Demo recording script: [`DEMO_SCRIPT.md`](DEMO_SCRIPT.md)
 - Explicit guarantee: the execution path transfers no user principal and sends zero native value
 
-See [`SUBMISSION.md`](SUBMISSION.md) for ready-to-paste submission copy. Only the final video URL and the hackathon submission action remain external.
+ProofPulse was submitted to the KeeperHub Agents Onchain Hackathon on July 27, 2026 and is currently under review. See [`SUBMISSION.md`](SUBMISSION.md) for the submitted project summary, verified transaction identifiers, and final links.
 
 ## License
 
